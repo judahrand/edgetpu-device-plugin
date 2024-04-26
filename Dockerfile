@@ -1,29 +1,23 @@
-ARG DEBIAN_BASE_SUFFIX=amd64
-FROM k8s.gcr.io/debian-base-${DEBIAN_BASE_SUFFIX}:0.4.1 as builder
-ARG GO_TARBALL=go1.11.linux-amd64.tar.gz
-ENV GOROOT=/usr/local/go
-ENV GOPATH=/go
-ENV PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-RUN apt-get update && apt-get install -y \
-        curl \
-    && rm -rf /var/lib/apt/lists/*
-RUN curl https://dl.google.com/go/${GO_TARBALL} | tar zxv -C /usr/local
-WORKDIR $GOPATH/src/github.com/kkohtaka/edgetpu-device-plugin
-COPY main.go .
-COPY pkg pkg
-COPY vendor vendor
-RUN CGO_ENABLED=0 GOOS=linux go build -a -o /bin/edgetpu-device-plugin
-RUN curl http://storage.googleapis.com/cloud-iot-edge-pretrained-models/edgetpu_api.tar.gz | tar xzv -C /
+FROM docker.io/golang:1.22.2-alpine as builder
 
-FROM k8s.gcr.io/debian-base-${DEBIAN_BASE_SUFFIX}:0.4.1
-ARG SO_SUFFIX=x86_64
-ARG LIB_PATH=/lib/x86_64-linux-gnu
-COPY --from=builder /python-tflite-source/libedgetpu/libedgetpu_${SO_SUFFIX}.so ${LIB_PATH}/libedgetpu.so
-COPY --from=builder /python-tflite-source/99-edgetpu-accelerator.rules /etc/udev/rules.d/
+ENV GOPATH=/go
+
+WORKDIR $GOPATH/src/github.com/kkohtaka/edgetpu-device-plugin
+
+COPY go.mod go.mod
+COPY go.sum go.sum
+
+# this helps caching the dependencies and they don't need to be rebuilt all the time
+RUN go mod download
+
+# Copy the go source
+COPY main.go main.go
+COPY pkg/ pkg/
+
+RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH:-amd64} go build  -ldflags="-w -s" -a -o /bin/edgetpu-device-plugin .
+
+FROM docker.io/library/alpine:3.19.1
+
 COPY --from=builder /bin/edgetpu-device-plugin /bin/
-RUN apt-get update && apt-get install -y \
-        libusb-1.0 \
-        udev \
-    && rm -rf /var/lib/apt/lists/* \
-    && udevadm trigger
+
 ENTRYPOINT ["/bin/edgetpu-device-plugin"]
