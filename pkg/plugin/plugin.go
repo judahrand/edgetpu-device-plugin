@@ -11,7 +11,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"k8s.io/klog"
+	"k8s.io/klog/v2"
 	pluginapi "k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1"
 )
 
