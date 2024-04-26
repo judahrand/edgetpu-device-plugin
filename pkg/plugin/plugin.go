@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc"
 
 	"k8s.io/klog"
-	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1"
+	pluginapi "k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1"
 )
 
 const (
@@ -131,4 +131,11 @@ func (s *service) register() error {
 	}
 	klog.Info("Registered device plugin")
 	return nil
+}
+
+func (s *DevicePluginServer) GetPreferredAllocation(ctx context.Context, request *pluginapi.PreferredAllocationRequest) (*pluginapi.PreferredAllocationResponse, error) {
+    // Implement your logic here
+    // This method is responsible for returning the preferred allocation of devices based on the request.
+    // You can customize this method according to your requirements.
+    return nil, nil // Placeholder return values, replace with actual implementation
 }

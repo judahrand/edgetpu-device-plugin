@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"k8s.io/klog"
-	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1"
+	pluginapi "k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1"
 
 	"github.com/kkohtaka/edgetpu-device-plugin/pkg/fileutil"
 )
@@ -40,7 +40,7 @@ func NewDevicePluginServer() *DevicePluginServer {
 }
 
 // GetDevicePluginOptions implements a part of
-// (k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1).DevicePluginServer.
+// (k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1).DevicePluginServer.
 func (dps *DevicePluginServer) GetDevicePluginOptions(
 	ctx context.Context,
 	empty *pluginapi.Empty,
@@ -48,7 +48,7 @@ func (dps *DevicePluginServer) GetDevicePluginOptions(
 	return &pluginapi.DevicePluginOptions{}, nil
 }
 
-// ListAndWatch implements a part of (k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1).DevicePluginServer.
+// ListAndWatch implements a part of (k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1).DevicePluginServer.
 func (dps *DevicePluginServer) ListAndWatch(
 	empty *pluginapi.Empty,
 	server pluginapi.DevicePlugin_ListAndWatchServer,
@@ -68,7 +68,7 @@ func (dps *DevicePluginServer) ListAndWatch(
 	}
 }
 
-// Allocate implements a part of (k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1).DevicePluginServer.
+// Allocate implements a part of (k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1).DevicePluginServer.
 func (dps *DevicePluginServer) Allocate(
 	ctx context.Context,
 	reqs *pluginapi.AllocateRequest,
@@ -99,7 +99,7 @@ func (dps *DevicePluginServer) Allocate(
 	return &resp, nil
 }
 
-// PreStartRequired implements a part of (k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1).DevicePluginServer.
+// PreStartRequired implements a part of (k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1).DevicePluginServer.
 func (dps *DevicePluginServer) PreStartContainer(
 	ctx context.Context,
 	req *pluginapi.PreStartContainerRequest,
