@@ -10,7 +10,7 @@ import (
 	"k8s.io/klog/v2"
 	pluginapi "k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1"
 
-	"github.com/kkohtaka/edgetpu-device-plugin/pkg/fileutil"
+	"github.com/judahrand/edgetpu-device-plugin/pkg/fileutil"
 )
 
 const (

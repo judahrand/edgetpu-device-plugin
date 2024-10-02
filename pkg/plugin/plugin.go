@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	resourceName = "kkohtaka.org/edgetpu"
+	resourceName = "judahrand.org/edgetpu"
 	pluginSock   = pluginapi.DevicePluginPath + "edgetpu.sock"
 
 	defaultDialTimeout = 5 * time.Second
@@ -134,8 +134,8 @@ func (s *service) register() error {
 }
 
 func (s *DevicePluginServer) GetPreferredAllocation(ctx context.Context, request *pluginapi.PreferredAllocationRequest) (*pluginapi.PreferredAllocationResponse, error) {
-    // Implement your logic here
-    // This method is responsible for returning the preferred allocation of devices based on the request.
-    // You can customize this method according to your requirements.
-    return nil, nil // Placeholder return values, replace with actual implementation
+	// Implement your logic here
+	// This method is responsible for returning the preferred allocation of devices based on the request.
+	// You can customize this method according to your requirements.
+	return nil, nil // Placeholder return values, replace with actual implementation
 }

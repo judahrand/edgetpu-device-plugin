@@ -1,5 +1,5 @@
-REGISTRY=quay.io
-PRODUCT=kkohtaka/edgetpu-demo
+REGISTRY=ghcr.io
+PRODUCT=judahrand/edgetpu-demo
 
 default: build
 

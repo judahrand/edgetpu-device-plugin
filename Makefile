@@ -1,5 +1,5 @@
-REGISTRY=quay.io
-PRODUCT=kkohtaka/edgetpu-device-plugin
+REGISTRY=ghcr.io
+PRODUCT=judahrand/edgetpu-device-plugin
 
 default: build
 

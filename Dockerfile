@@ -2,7 +2,7 @@ FROM docker.io/golang:1.22.2-alpine as builder
 
 ENV GOPATH=/go
 
-WORKDIR $GOPATH/src/github.com/kkohtaka/edgetpu-device-plugin
+WORKDIR $GOPATH/src/github.com/judahrand/edgetpu-device-plugin
 
 COPY go.mod go.mod
 COPY go.sum go.sum
