@@ -7,24 +7,19 @@ all: clean build samples
 
 .PHONY: build
 build:
-	docker build -t $(REGISTRY)/$(PRODUCT):amd64 .
+	docker build -t $(REGISTRY)/$(PRODUCT):amd64 --platform linux/amd64 .
 
-.PHONY: build-arm32
-build-arm32:
-	docker build -t $(REGISTRY)/$(PRODUCT):arm32 \
-		--build-arg DEBIAN_BASE_SUFFIX=arm \
-		--build-arg GO_TARBALL=go1.11.linux-armv6l.tar.gz \
-		--build-arg SO_SUFFIX=arm32 \
-		--build-arg LIB_PATH=/lib/arm-linux-gnueabihf \
-		.
+.PHONY: build-arm64
+build-arm64:
+	docker build -t $(REGISTRY)/$(PRODUCT):arm64 --platform linux/arm64 .
 
 .PHONY: samples
 samples:
 	$(MAKE) -C samples
 
-.PHONY: samples-arm32
-samples-arm32:
-	$(MAKE) -C samples build-arm32
+.PHONY: samples-arm64
+samples-arm64:
+	$(MAKE) -C samples build-arm64
 
 .PHONY: clean
 clean:
@@ -36,7 +31,7 @@ push:
 	docker push $(REGISTRY)/$(PRODUCT):amd64
 	$(MAKE) -C samples push
 
-.PHONY: push-arm32
-push-arm32:
-	docker push $(REGISTRY)/$(PRODUCT):arm32
-	$(MAKE) -C samples push-arm32
+.PHONY: push-arm64
+push-arm64:
+	docker push $(REGISTRY)/$(PRODUCT):arm64
+	$(MAKE) -C samples push-arm64
