@@ -29,7 +29,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: edgetpu-device-plugin
-        image: ghcr.io/judahrand/edgetpu-device-plugin:amd64
+        image: ghcr.io/judahrand/edgetpu-device-plugin:latest
         imagePullPolicy: Always
         command:
           - /bin/edgetpu-device-plugin
