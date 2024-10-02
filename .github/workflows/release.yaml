@@ -6,6 +6,12 @@ on:
   push:
     branches:
       - master
+    paths:
+      - main.go
+      - go.mod
+      - go.sum
+      - pkg/**
+      - Dockerfile
 
 jobs:
   release:
